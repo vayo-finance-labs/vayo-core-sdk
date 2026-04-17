@@ -1,0 +1,90 @@
+{
+	"name": "@vayo/core-sdk",
+	"version": "0.1.1",
+	"description": "Official TypeScript SDK for the Vayo Finance Partner API — Mode S lending operations on Solana with partner-signed transactions.",
+	"type": "module",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./mode-s/privy": {
+			"types": "./dist/mode-s/privy.d.ts",
+			"import": "./dist/mode-s/privy.js",
+			"require": "./dist/mode-s/privy.cjs"
+		},
+		"./generated": {
+			"types": "./dist/generated/index.d.ts",
+			"import": "./dist/generated/index.js",
+			"require": "./dist/generated/index.cjs"
+		}
+	},
+	"files": [
+		"dist",
+		"README.md",
+		"CHANGELOG.md",
+		"LICENSE",
+		"NOTICE"
+	],
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	},
+	"sideEffects": false,
+	"scripts": {
+		"gen": "kubb generate",
+		"build": "bun run gen && tsup",
+		"dev": "tsup --watch",
+		"test": "bun test",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome check src",
+		"lint:fix": "biome check --write src",
+		"clean": "rm -rf dist node_modules .turbo src/generated",
+		"prepublishOnly": "bun run build && bun test"
+	},
+	"peerDependencies": {
+		"@privy-io/node": ">=0.10.0",
+		"@solana/kit": ">=6.0.0"
+	},
+	"peerDependenciesMeta": {
+		"@privy-io/node": {
+			"optional": true
+		},
+		"@solana/kit": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"@kubb/cli": "4.37.2",
+		"@kubb/core": "4.37.2",
+		"@kubb/plugin-client": "4.37.2",
+		"@kubb/plugin-oas": "4.37.2",
+		"@kubb/plugin-ts": "4.37.2",
+		"@privy-io/node": "^0.14.0",
+		"@solana/kit": "^6.1.0",
+		"@vayo/typescript-config": "workspace:*",
+		"bun-types": "latest",
+		"tsup": "^8.3.5",
+		"typescript": "^5.9.3"
+	},
+	"keywords": [
+		"vayo",
+		"solana",
+		"lending",
+		"kamino",
+		"defi",
+		"yield",
+		"sdk",
+		"partner"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vayo-finance-labs/vayo-finance"
+	},
+	"homepage": "https://vayo.finance",
+	"license": "Apache-2.0"
+}

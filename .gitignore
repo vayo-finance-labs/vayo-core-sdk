@@ -1,0 +1,6 @@
+dist/
+node_modules/
+.turbo/
+src/generated/
+*.log
+.DS_Store

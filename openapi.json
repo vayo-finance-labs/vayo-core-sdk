@@ -1,0 +1,772 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"title": "Vayo Finance Partner API",
+		"description": "Partner-facing v1 routes for the Vayo Finance lending platform.\nCovers Mode V (Vayo signs) and Mode S (partner self-signs) flows,\npartner self-service dashboards, and the Mode S health check.\n\nVayo-internal admin endpoints are intentionally excluded — they\nlive behind `adminGuard` and are not part of the partner contract.\n\nQuickstart: docs/core-sdk/quickstart.md\nSource: apps/api/src/presentation/routes/v1/",
+		"version": "1.0.0",
+		"contact": {
+			"name": "Vayo Engineering",
+			"email": "partners@vayo.finance"
+		}
+	},
+	"servers": [
+		{
+			"url": "https://api.vayo.finance",
+			"description": "Production"
+		},
+		{
+			"url": "https://api.staging.vayo.finance",
+			"description": "Staging"
+		},
+		{
+			"url": "http://localhost:3001",
+			"description": "Local"
+		}
+	],
+	"tags": [
+		{
+			"name": "Partner v1 — Auth",
+			"description": "Authenticate a partner-user via the partner Privy app (Mode V)."
+		},
+		{
+			"name": "Partner v1 — Wallets",
+			"description": "Read the partner-user's wallet address and on-chain balances."
+		},
+		{
+			"name": "Partner v1 — Lending",
+			"description": "Read-only market and reserve data filtered by the partner's allowlist."
+		},
+		{
+			"name": "Partner v1 — Lending Operations",
+			"description": "Mode V supply/redeem and Mode S build/submit endpoints."
+		},
+		{
+			"name": "Partner v1 — Dashboard",
+			"description": "Self-service partner analytics — users, transactions, fees, consumption."
+		},
+		{
+			"name": "Partner v1 — Rebalance",
+			"description": "Rebalance operation confirmations from the partner signing proxy."
+		},
+		{
+			"name": "Health",
+			"description": "Mode S subsystem health check."
+		}
+	],
+	"components": {
+		"securitySchemes": {
+			"PartnerApiKey": {
+				"type": "apiKey",
+				"in": "header",
+				"name": "x-api-key",
+				"description": "Partner API key issued via `POST /admin/partners/:id/api-keys`. Format: `vayo_pk_<32 chars>`."
+			},
+			"PartnerUserJwt": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT",
+				"description": "Privy access token for the partner-user. Validated against the partner's Privy app."
+			}
+		},
+		"schemas": {}
+	},
+	"security": [
+		{
+			"PartnerApiKey": []
+		}
+	],
+	"paths": {
+		"/v1/lending/markets": {
+			"get": {
+				"operationId": "getV1LendingMarkets",
+				"tags": ["Partner v1 — Lending"],
+				"summary": "List lending markets — filtered by the partner's allowlist (intersection with global)",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/lending/reserves": {
+			"get": {
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "query",
+						"name": "mints",
+						"required": false
+					}
+				],
+				"operationId": "getV1LendingReserves",
+				"tags": ["Partner v1 — Lending"],
+				"summary": "Flat list of reserves across markets — filtered by partner allowlist",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/lending/markets/available": {
+			"get": {
+				"operationId": "getV1LendingMarketsAvailable",
+				"tags": ["Partner v1 — Lending"],
+				"summary": "List all Vayo-approved markets (global whitelist) — ignores the partner allowlist",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/dashboard/allowlist": {
+			"get": {
+				"operationId": "getV1DashboardAllowlist",
+				"tags": ["Partner v1 — Dashboard"],
+				"summary": "Read-only view of the partner's effective market/reserve allowlist",
+				"responses": {
+					"200": {}
+				}
+			},
+			"put": {
+				"parameters": [],
+				"operationId": "putV1DashboardAllowlist",
+				"tags": ["Partner v1 — Dashboard"],
+				"summary": "Update the partner's market/reserve allowlist (subset of the Vayo global whitelist)",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"allowedMarketAddresses": {
+										"anyOf": [
+											{
+												"type": "array",
+												"items": {
+													"minLength": 32,
+													"maxLength": 64,
+													"type": "string"
+												}
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"allowedReserveAddresses": {
+										"anyOf": [
+											{
+												"type": "array",
+												"items": {
+													"minLength": 32,
+													"maxLength": 64,
+													"type": "string"
+												}
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								}
+							}
+						},
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"allowedMarketAddresses": {
+										"anyOf": [
+											{
+												"type": "array",
+												"items": {
+													"minLength": 32,
+													"maxLength": 64,
+													"type": "string"
+												}
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"allowedReserveAddresses": {
+										"anyOf": [
+											{
+												"type": "array",
+												"items": {
+													"minLength": 32,
+													"maxLength": 64,
+													"type": "string"
+												}
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								}
+							}
+						},
+						"text/plain": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"allowedMarketAddresses": {
+										"anyOf": [
+											{
+												"type": "array",
+												"items": {
+													"minLength": 32,
+													"maxLength": 64,
+													"type": "string"
+												}
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"allowedReserveAddresses": {
+										"anyOf": [
+											{
+												"type": "array",
+												"items": {
+													"minLength": 32,
+													"maxLength": 64,
+													"type": "string"
+												}
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/dashboard/overview": {
+			"get": {
+				"operationId": "getV1DashboardOverview",
+				"tags": ["Partner v1 — Dashboard"],
+				"summary": "Partner dashboard home — users, volume, fees, consumption at a glance",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/dashboard/users": {
+			"get": {
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "query",
+						"name": "limit",
+						"required": false
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "query",
+						"name": "offset",
+						"required": false
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "query",
+						"name": "activeOnly",
+						"required": false
+					}
+				],
+				"operationId": "getV1DashboardUsers",
+				"tags": ["Partner v1 — Dashboard"],
+				"summary": "Paginated list of the partner's users",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/dashboard/transactions": {
+			"get": {
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "query",
+						"name": "type",
+						"required": false
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "query",
+						"name": "status",
+						"required": false
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "query",
+						"name": "limit",
+						"required": false
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "query",
+						"name": "offset",
+						"required": false
+					}
+				],
+				"operationId": "getV1DashboardTransactions",
+				"tags": ["Partner v1 — Dashboard"],
+				"summary": "Paginated transactions across the partner's user base (filter by type/status)",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/dashboard/consumption": {
+			"get": {
+				"operationId": "getV1DashboardConsumption",
+				"tags": ["Partner v1 — Dashboard"],
+				"summary": "API consumption metrics (requests 24h/7d/30d, rate limit config, recent logs)",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/dashboard/investment-performance": {
+			"get": {
+				"operationId": "getV1DashboardInvestment-performance",
+				"tags": ["Partner v1 — Dashboard"],
+				"summary": "Aggregated investment performance — total yield, volume, user count across windows (NOT performance fees)",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/dashboard/performance-fees": {
+			"get": {
+				"operationId": "getV1DashboardPerformance-fees",
+				"tags": ["Partner v1 — Dashboard"],
+				"summary": "Legacy alias of /partner-fees — performance fees collected from the partner's users",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/dashboard/partner-fees": {
+			"get": {
+				"operationId": "getV1DashboardPartner-fees",
+				"tags": ["Partner v1 — Dashboard"],
+				"summary": "Partner's earned fee share (NOT investment performance) — current model, bps, totals across windows",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/dashboard/partner-fees/payouts": {
+			"get": {
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "query",
+						"name": "limit",
+						"required": false
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "query",
+						"name": "offset",
+						"required": false
+					}
+				],
+				"operationId": "getV1DashboardPartner-feesPayouts",
+				"tags": ["Partner v1 — Dashboard"],
+				"summary": "Paginated partner fee payout history (row-level detail)",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/dashboard/api-keys": {
+			"get": {
+				"operationId": "getV1DashboardApi-keys",
+				"tags": ["Partner v1 — Dashboard"],
+				"summary": "Partner's own API keys (prefix + metadata only, never plaintext)",
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/lending-operations/redeem-allocated/build": {
+			"post": {
+				"parameters": [
+					{
+						"schema": {
+							"default": "false",
+							"anyOf": [
+								{
+									"const": "true",
+									"type": "string"
+								},
+								{
+									"const": "false",
+									"type": "string"
+								}
+							]
+						},
+						"in": "query",
+						"name": "gasless",
+						"required": false
+					}
+				],
+				"operationId": "postV1Lending-operationsRedeem-allocatedBuild",
+				"summary": "Mode S — build a partially-signed redeem tx",
+				"description": "Builds a Kamino redeem transaction with the witness cosignature attached. The partner deserializes, adds the user wallet authority signature via their own Privy SDK, and submits via /submit (or directly to their own RPC).",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"required": [
+									"privyDid",
+									"marketAddress",
+									"tokenMint",
+									"amount"
+								],
+								"properties": {
+									"privyDid": {
+										"minLength": 1,
+										"type": "string"
+									},
+									"marketAddress": {
+										"minLength": 32,
+										"maxLength": 64,
+										"type": "string"
+									},
+									"tokenMint": {
+										"minLength": 32,
+										"maxLength": 64,
+										"type": "string"
+									},
+									"amount": {
+										"minLength": 1,
+										"type": "string"
+									},
+									"reserveAddress": {
+										"minLength": 32,
+										"maxLength": 64,
+										"type": "string"
+									}
+								}
+							}
+						},
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"required": [
+									"privyDid",
+									"marketAddress",
+									"tokenMint",
+									"amount"
+								],
+								"properties": {
+									"privyDid": {
+										"minLength": 1,
+										"type": "string"
+									},
+									"marketAddress": {
+										"minLength": 32,
+										"maxLength": 64,
+										"type": "string"
+									},
+									"tokenMint": {
+										"minLength": 32,
+										"maxLength": 64,
+										"type": "string"
+									},
+									"amount": {
+										"minLength": 1,
+										"type": "string"
+									},
+									"reserveAddress": {
+										"minLength": 32,
+										"maxLength": 64,
+										"type": "string"
+									}
+								}
+							}
+						},
+						"text/plain": {
+							"schema": {
+								"type": "object",
+								"required": [
+									"privyDid",
+									"marketAddress",
+									"tokenMint",
+									"amount"
+								],
+								"properties": {
+									"privyDid": {
+										"minLength": 1,
+										"type": "string"
+									},
+									"marketAddress": {
+										"minLength": 32,
+										"maxLength": 64,
+										"type": "string"
+									},
+									"tokenMint": {
+										"minLength": 32,
+										"maxLength": 64,
+										"type": "string"
+									},
+									"amount": {
+										"minLength": 1,
+										"type": "string"
+									},
+									"reserveAddress": {
+										"minLength": 32,
+										"maxLength": 64,
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/lending-operations/redeem-allocated/submit": {
+			"post": {
+				"parameters": [],
+				"operationId": "postV1Lending-operationsRedeem-allocatedSubmit",
+				"summary": "Mode S — submit a fully-signed redeem tx (optional)",
+				"description": "Verifies the witness/Kora cosignatures are still intact (Defense 2b — message hash re-verification) and submits to RPC. Optional: partners may submit directly to their own RPC instead and skip this endpoint entirely. The cryptographic anti-bypass guarantee holds either way.",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"required": ["pendingRedeemId", "serializedTx"],
+								"properties": {
+									"pendingRedeemId": {
+										"format": "uuid",
+										"type": "string"
+									},
+									"serializedTx": {
+										"minLength": 1,
+										"type": "string"
+									}
+								}
+							}
+						},
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"required": ["pendingRedeemId", "serializedTx"],
+								"properties": {
+									"pendingRedeemId": {
+										"format": "uuid",
+										"type": "string"
+									},
+									"serializedTx": {
+										"minLength": 1,
+										"type": "string"
+									}
+								}
+							}
+						},
+						"text/plain": {
+							"schema": {
+								"type": "object",
+								"required": ["pendingRedeemId", "serializedTx"],
+								"properties": {
+									"pendingRedeemId": {
+										"format": "uuid",
+										"type": "string"
+									},
+									"serializedTx": {
+										"minLength": 1,
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {}
+				}
+			}
+		},
+		"/v1/rebalance/operations/{pendingOperationId}/confirm": {
+			"post": {
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						},
+						"in": "path",
+						"name": "pendingOperationId",
+						"required": true
+					}
+				],
+				"operationId": "postV1RebalanceOperationsByPendingOperationIdConfirm",
+				"tags": ["Partner v1 — Rebalance"],
+				"summary": "Confirm the outcome of an async rebalance operation",
+				"description": "Signing proxy reports the result of submitting the atomic rebalance tx. Authenticated with a scoped API key (scope: `rebalance:operation:confirm`) and requires an `Idempotency-Key` header. Vayo independently verifies the reported signature on-chain before trusting confirmations.",
+				"responses": {
+					"200": {
+						"description": "Confirmation accepted"
+					},
+					"401": {
+						"description": "Invalid or missing API key"
+					},
+					"403": {
+						"description": "API key missing required scope, or pending operation belongs to a different partner"
+					},
+					"422": {
+						"description": "Signature not yet visible on-chain — partner should retry later"
+					}
+				},
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"required": ["signature", "status"],
+								"properties": {
+									"signature": {
+										"minLength": 1,
+										"maxLength": 128,
+										"type": "string"
+									},
+									"status": {
+										"anyOf": [
+											{
+												"const": "confirmed",
+												"type": "string"
+											},
+											{
+												"const": "failed",
+												"type": "string"
+											},
+											{
+												"const": "dropped",
+												"type": "string"
+											}
+										]
+									},
+									"errorMessage": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"required": ["signature", "status"],
+								"properties": {
+									"signature": {
+										"minLength": 1,
+										"maxLength": 128,
+										"type": "string"
+									},
+									"status": {
+										"anyOf": [
+											{
+												"const": "confirmed",
+												"type": "string"
+											},
+											{
+												"const": "failed",
+												"type": "string"
+											},
+											{
+												"const": "dropped",
+												"type": "string"
+											}
+										]
+									},
+									"errorMessage": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"text/plain": {
+							"schema": {
+								"type": "object",
+								"required": ["signature", "status"],
+								"properties": {
+									"signature": {
+										"minLength": 1,
+										"maxLength": 128,
+										"type": "string"
+									},
+									"status": {
+										"anyOf": [
+											{
+												"const": "confirmed",
+												"type": "string"
+											},
+											{
+												"const": "failed",
+												"type": "string"
+											},
+											{
+												"const": "dropped",
+												"type": "string"
+											}
+										]
+									},
+									"errorMessage": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/health/mode-s": {
+			"get": {
+				"operationId": "getHealthMode-s",
+				"responses": {
+					"200": {}
+				}
+			}
+		}
+	}
+}

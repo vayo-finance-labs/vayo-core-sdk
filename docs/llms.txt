@@ -1,0 +1,51 @@
+# Vayo Finance Partner API & SDK
+
+> Vayo Finance is a multi-tenant Solana lending platform built on top of Kamino. Partners integrate via the Partner v1 API or the official `@vayo/core-sdk` TypeScript package, and earn an automatic on-chain share of every redeem via multi-recipient `transferChecked` instructions — no off-chain ledger, no claim flow.
+
+Partners sign every redeem locally; Vayo attaches a witness cosignature at `/build` that cryptographically binds the fee instructions, so partners cannot strip them without invalidating the signature. Two mutually-exclusive fee models are available: `performance_split` for revenue sharing on Vayo's performance fee, or `builder_code` for a Hyperliquid-style flat builder fee on gross yield. Vayo-internal admin endpoints are intentionally excluded from the partner contract — partners are provisioned by Vayo ops via partners@vayo.finance. An optional HMAC-signed rebalance-proxy webhook lets partners also approve each bot-initiated rebalance redeem.
+
+The OpenAPI spec is the source of truth for all routes and is regenerated from the live Elysia route definitions. The TypeScript SDK wraps every route in a tag-grouped typed client (`vayo.lending.*`, `vayo.modeS.*`, `vayo.payments.*`, `vayo.dashboard.*`, `vayo.health.*`) plus an opinionated `redeem()` orchestrator with pluggable signers. The SDK has zero runtime dependencies; the `@vayo/core-sdk/mode-s/privy` sub-export is the only path that requires `@privy-io/node` (declared as an optional peer dep).
+
+## Getting started
+
+- [Quickstart guide](quickstart.md): 30-minute walkthrough — get provisioned, first auth, first supply, first redeem, going-to-prod checklist. SDK + curl examples side by side.
+- [SDK README (npm landing page)](../../packages/core-sdk/README.md): Install, 60-second example, full redeem walkthrough, complete method reference, idempotency + retry pattern, error handling.
+- [SDK CHANGELOG](../../packages/core-sdk/CHANGELOG.md): Versioned release notes — the 0.1.0 entry lists the covered partner v1 routes and the optional Privy adapter.
+- [Vayo Partner SDK skill (SKILL.md)](../../packages/core-sdk/SKILL.md): LLM-oriented integration guide — when to use the SDK, which method group to call for which task, going-to-prod checklist.
+
+## API reference
+
+- [OpenAPI 3.x spec (openapi.json)](openapi.json): Partner v1 routes with request/response schemas and security definitions. Generated from the live Elysia route definitions via `bun run gen:partner-openapi` from `apps/api`. Drop into any OpenAPI codegen tool (`openapi-typescript`, Kubb, openapi-generator).
+- [Postman collection (v2.1)](postman-collection.json): Pre-wired `x-api-key` auth, pre-request script that auto-generates `Idempotency-Key`, and a `/build → /submit` redeem chain that stashes `pendingRedeemId` between requests via a test script.
+
+## Examples
+
+- [Redeem example (TypeScript, runnable)](examples/mode-s-redeem.ts): End-to-end `/build → verify-fee-recipients → sign → /submit` using `@vayo/core-sdk` + `@vayo/core-sdk/mode-s/privy` + `@privy-io/node`. ~95 lines including structured error handling and the optional direct-RPC fallback.
+
+## SDK source (TypeScript)
+
+- [createVayoPartnerClient — Layer 1 client](../../packages/core-sdk/src/client.ts): Tag-grouped typed client wrapping the partner v1 routes. Auto-injects `x-api-key`, `Authorization: Bearer <jwt>`, and `Idempotency-Key`; throws `VayoApiError` on non-2xx.
+- [Redeem orchestrator — Layer 2](../../packages/core-sdk/src/mode-s/redeem.ts): The contract for `vayo.modeS.redeem()` — `RedeemModeSInput`, `SignTransactionCallback`, `RedeemModeSResult`. Includes the optional direct-RPC fallback used when `/submit` fails.
+- [Defense-3 fee recipient verifier](../../packages/core-sdk/src/mode-s/verify-fee-recipients.ts): Local mirror of Vayo's server-side fee instruction validator. Aborts the orchestrator before the partner wastes a signing call if Vayo's fee math drifts from the partner's expectation.
+- [Privy signer adapter (opt-in sub-export)](../../packages/core-sdk/src/mode-s/privy.ts): `createPrivySigner(privy, { walletId, authorizationPrivateKeys })` — bridges `@privy-io/node` to the `signTransaction` callback. The only file in the SDK that imports `@privy-io/node`.
+- [VayoApiError](../../packages/core-sdk/src/errors.ts): Structured error envelope (`statusCode`, `code`, `correlationId`) thrown on non-2xx responses. Type-narrow with `instanceof VayoApiError` to surface `correlationId` in logs.
+- [Constants](../../packages/core-sdk/src/constants.ts): `U64_MAX` (for full redeems) and `USDC_MINT` (Solana mainnet).
+- [HTTP wrapper (internal)](../../packages/core-sdk/src/http.ts): Fetch wrapper consumed by the kubb-generated client functions. Not part of the public API — partners interact with `createVayoPartnerClient()` instead.
+
+## Concepts and design
+
+- [Partner platform deep-dive](../partner-api-platform.md): Full design doc — the defenses against fee bypass (witness signature binding + Defense-3 fee instruction validation + Defense-4 reconciliation CRON), fee math, anti-bypass guarantees.
+- [Transaction system](../transaction-system.md): The 2-phase commit pattern that backs every on-chain operation. Every supply, redeem, deposit, and withdrawal is tracked through `pending → confirmed | failed`.
+- [Gasless transactions (Kora)](../gasless-transactions.md): How Vayo's first-party flows route fees through Kora as the SOL fee payer. `?gasless=true` on redeem is currently deferred and returns `501`.
+- [Rebalance proxy webhook](../../../docs-partners/guides/signing-modes.md): Optional HMAC-signed webhook contract that lets partners authorize each auto-rebalance redeem via `rebalanceProxyUrl` + `POST /v1/webhooks/rebalance-confirmation`. See also [examples/rebalance-proxy.md](../../../docs-partners/sdk/examples/rebalance-proxy.md).
+
+## Optional
+
+- [Architecture overview](../architecture.md): Vayo's hexagonal architecture (domain entities, repository ports, use cases, infrastructure adapters, Elysia routes). Useful context for understanding *why* the API is shaped the way it is, not required for partner integration.
+- [Coding conventions](../conventions.md): TypeScript, Biome, naming, and git commit conventions used inside the Vayo monorepo. Only relevant if a partner is contributing back to Vayo's first-party code.
+- [Rebalance system](../rebalance-system.md): Vayo's autonomous rebalancing bot that moves user positions between Kamino markets every 8h. Partners do not interact with this directly — it's mentioned only because partner-fee payouts during a rebalance are split atomically the same way as a user-initiated redeem.
+- [Score engine](../score-engine.md): The market scoring algorithm the rebalance bot uses to rank Kamino reserves by APY + risk. Partners can read the same scored data via `GET /v1/lending/markets`, but the algorithm details are not part of the partner contract.
+- [Payment system (NoxPay PIX)](../payment-system.md): Vayo's PIX onramp/offramp via NoxPay Crossramp. First-party only — not exposed via the partner API.
+- [SDK build configuration (kubb.config.ts)](../../packages/core-sdk/kubb.config.ts): Codegen pipeline that consumes `openapi.json` and emits `src/generated/`. Re-run via `cd packages/core-sdk && bun run gen` after the OpenAPI spec changes.
+- [SDK build configuration (tsup.config.ts)](../../packages/core-sdk/tsup.config.ts): Dual ESM + CJS bundler config. `@privy-io/node` and `@solana/kit` marked external so the main bundle stays at zero runtime deps.
+- [SDK package manifest](../../packages/core-sdk/package.json): Conditional `exports` map (root + `./mode-s/privy` + `./generated`), `publishConfig`, `prepublishOnly` guard, optional peer dep declarations.

@@ -1,0 +1,11 @@
+src/
+node_modules/
+.turbo/
+tests/
+kubb.config.ts
+tsup.config.ts
+tsconfig.json
+biome.json
+.gitignore
+*.log
+.DS_Store
