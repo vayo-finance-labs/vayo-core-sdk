@@ -1,0 +1,2619 @@
+{
+	"item": [
+		{
+			"name": "Partner v1 \u2014 Lending",
+			"description": "",
+			"item": [
+				{
+					"id": "f6268338-ef8d-490d-a581-81cbc512014c",
+					"name": "List lending markets \u2014 filtered by the partner's allowlist (intersection with global)",
+					"request": {
+						"name": "List lending markets \u2014 filtered by the partner's allowlist (intersection with global)",
+						"description": {},
+						"url": {
+							"path": ["v1", "lending", "markets"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "fd9304f9-f948-4d33-88b7-9f17c5cde5ae",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "lending", "markets"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "606b44d8-4e73-4798-b7ef-14f5bbcc393e",
+					"name": "Flat list of reserves across markets \u2014 filtered by partner allowlist",
+					"request": {
+						"name": "Flat list of reserves across markets \u2014 filtered by partner allowlist",
+						"description": {},
+						"url": {
+							"path": ["v1", "lending", "reserves"],
+							"host": ["{{baseUrl}}"],
+							"query": [
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "mints",
+									"value": "<string>"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "a045b7aa-0830-469a-95b2-0a67658d9d31",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "lending", "reserves"],
+									"host": ["{{baseUrl}}"],
+									"query": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "mints",
+											"value": "<string>"
+										}
+									],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				}
+			]
+		},
+		{
+			"name": "Partner v1 \u2014 Dashboard",
+			"description": "",
+			"item": [
+				{
+					"id": "7ba41ed3-fd01-406a-8fbc-ef43853dd839",
+					"name": "Read-only view of the partner's effective market/reserve allowlist",
+					"request": {
+						"name": "Read-only view of the partner's effective market/reserve allowlist",
+						"description": {},
+						"url": {
+							"path": ["v1", "dashboard", "allowlist"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "b349c147-f2bd-4702-b64e-fffd56111de1",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "dashboard", "allowlist"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "40b0a6de-b7cf-4cd9-bdd2-fc753e8180f2",
+					"name": "Partner dashboard home \u2014 users, volume, fees, consumption at a glance",
+					"request": {
+						"name": "Partner dashboard home \u2014 users, volume, fees, consumption at a glance",
+						"description": {},
+						"url": {
+							"path": ["v1", "dashboard", "overview"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "3464ce03-20b9-4abe-895c-b229d0cfb8b1",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "dashboard", "overview"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "81a4054e-e84e-4b6e-8562-c4a20342136c",
+					"name": "Paginated list of the partner's users",
+					"request": {
+						"name": "Paginated list of the partner's users",
+						"description": {},
+						"url": {
+							"path": ["v1", "dashboard", "users"],
+							"host": ["{{baseUrl}}"],
+							"query": [
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "limit",
+									"value": "<string>"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "offset",
+									"value": "<string>"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "activeOnly",
+									"value": "<string>"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "ef6cc2f1-9358-4e76-94df-8f73bc5454bf",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "dashboard", "users"],
+									"host": ["{{baseUrl}}"],
+									"query": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "limit",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "offset",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "activeOnly",
+											"value": "<string>"
+										}
+									],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "3aa05a3a-1058-45d2-a4b4-a2cb0c689424",
+					"name": "Paginated transactions across the partner's user base (filter by type/status)",
+					"request": {
+						"name": "Paginated transactions across the partner's user base (filter by type/status)",
+						"description": {},
+						"url": {
+							"path": ["v1", "dashboard", "transactions"],
+							"host": ["{{baseUrl}}"],
+							"query": [
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "type",
+									"value": "<string>"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "status",
+									"value": "<string>"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "limit",
+									"value": "<string>"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "offset",
+									"value": "<string>"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "0fffaead-44cf-46b3-9d54-1dcc49900adf",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "dashboard", "transactions"],
+									"host": ["{{baseUrl}}"],
+									"query": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "type",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "status",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "limit",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "offset",
+											"value": "<string>"
+										}
+									],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "90bb3667-411c-4139-8887-0c2b6e7ba8dc",
+					"name": "API consumption metrics (requests 24h/7d/30d, rate limit config, recent logs)",
+					"request": {
+						"name": "API consumption metrics (requests 24h/7d/30d, rate limit config, recent logs)",
+						"description": {},
+						"url": {
+							"path": ["v1", "dashboard", "consumption"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "17467e77-8f9f-4bdc-84d0-6cec8d7bb688",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "dashboard", "consumption"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "d9248ccf-334b-49b0-a21c-8a4c43874120",
+					"name": "Aggregated investment performance \u2014 total yield, volume, user count across windows (NOT performance fees)",
+					"request": {
+						"name": "Aggregated investment performance \u2014 total yield, volume, user count across windows (NOT performance fees)",
+						"description": {},
+						"url": {
+							"path": ["v1", "dashboard", "investment-performance"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "ee3a40a5-4277-4d87-a93e-cae9a8d15246",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "dashboard", "investment-performance"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "64772bd7-4bae-4e93-a07a-1106467448e5",
+					"name": "Legacy alias of /partner-fees \u2014 performance fees collected from the partner's users",
+					"request": {
+						"name": "Legacy alias of /partner-fees \u2014 performance fees collected from the partner's users",
+						"description": {},
+						"url": {
+							"path": ["v1", "dashboard", "performance-fees"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "21b6fd37-9bdb-44ce-a943-8bcb6e4c054b",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "dashboard", "performance-fees"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "11b81615-dba8-4acb-9046-957a5cbc3f06",
+					"name": "Partner's earned fee share (NOT investment performance) \u2014 current model, bps, totals across windows",
+					"request": {
+						"name": "Partner's earned fee share (NOT investment performance) \u2014 current model, bps, totals across windows",
+						"description": {},
+						"url": {
+							"path": ["v1", "dashboard", "partner-fees"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "60cff23f-4d91-49bf-acca-3c61ace404d1",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "dashboard", "partner-fees"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "e4e1ca8b-a617-4442-8aee-0eec96c0c7bd",
+					"name": "Paginated partner fee payout history (row-level detail)",
+					"request": {
+						"name": "Paginated partner fee payout history (row-level detail)",
+						"description": {},
+						"url": {
+							"path": ["v1", "dashboard", "partner-fees", "payouts"],
+							"host": ["{{baseUrl}}"],
+							"query": [
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "limit",
+									"value": "<string>"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "offset",
+									"value": "<string>"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "2741ba28-fcf7-4bec-96d4-f88d883bc3d3",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "dashboard", "partner-fees", "payouts"],
+									"host": ["{{baseUrl}}"],
+									"query": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "limit",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "offset",
+											"value": "<string>"
+										}
+									],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "e5c48ef2-7f21-466c-a52b-41339f42acdb",
+					"name": "Partner's own API keys (prefix + metadata only, never plaintext)",
+					"request": {
+						"name": "Partner's own API keys (prefix + metadata only, never plaintext)",
+						"description": {},
+						"url": {
+							"path": ["v1", "dashboard", "api-keys"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "63371077-9b56-4e05-a9c6-3b4dbc41c256",
+							"name": "200",
+							"originalRequest": {
+								"url": {
+									"path": ["v1", "dashboard", "api-keys"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				}
+			]
+		},
+		{
+			"id": "690b32dc-4995-4f6b-8e93-f4149a13f9f3",
+			"name": "Mode S \u2014 build a partially-signed redeem tx",
+			"request": {
+				"name": "Mode S \u2014 build a partially-signed redeem tx",
+				"description": {
+					"content": "Builds a Kamino redeem transaction with the witness cosignature attached. The partner deserializes, adds the user wallet authority signature via their own Privy SDK, and submits via /submit (or directly to their own RPC).",
+					"type": "text/plain"
+				},
+				"url": {
+					"path": ["v1", "lending-operations", "redeem-allocated", "build"],
+					"host": ["{{baseUrl}}"],
+					"query": [
+						{
+							"disabled": false,
+							"description": {
+								"content": "",
+								"type": "text/plain"
+							},
+							"key": "gasless",
+							"value": "<string>"
+						}
+					],
+					"variable": []
+				},
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"method": "POST",
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"privyDid\": \"<string>\",\n  \"marketAddress\": \"<string>\",\n  \"tokenMint\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"reserveAddress\": \"<string>\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"auth": null
+			},
+			"response": [
+				{
+					"id": "a119b498-0cc1-4edf-99ba-6554828d7d73",
+					"name": "200",
+					"originalRequest": {
+						"url": {
+							"path": ["v1", "lending-operations", "redeem-allocated", "build"],
+							"host": ["{{baseUrl}}"],
+							"query": [
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "gasless",
+									"value": "<string>"
+								}
+							],
+							"variable": []
+						},
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": {
+									"content": "Added as a part of security scheme: apikey",
+									"type": "text/plain"
+								},
+								"key": "x-api-key",
+								"value": "<API Key>"
+							}
+						],
+						"method": "POST",
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"privyDid\": \"<string>\",\n  \"marketAddress\": \"<string>\",\n  \"tokenMint\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"reserveAddress\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"header": [],
+					"cookie": [],
+					"_postman_previewlanguage": "text"
+				}
+			],
+			"event": [],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			}
+		},
+		{
+			"id": "dc0e48c1-66e6-4dda-9f96-b991b8589a5d",
+			"name": "Mode S \u2014 submit a fully-signed redeem tx (optional)",
+			"request": {
+				"name": "Mode S \u2014 submit a fully-signed redeem tx (optional)",
+				"description": {
+					"content": "Verifies the witness/Kora cosignatures are still intact (Defense 2b \u2014 message hash re-verification) and submits to RPC. Optional: partners may submit directly to their own RPC instead and skip this endpoint entirely. The cryptographic anti-bypass guarantee holds either way.",
+					"type": "text/plain"
+				},
+				"url": {
+					"path": ["v1", "lending-operations", "redeem-allocated", "submit"],
+					"host": ["{{baseUrl}}"],
+					"query": [],
+					"variable": []
+				},
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"method": "POST",
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"pendingRedeemId\": \"<uuid>\",\n  \"serializedTx\": \"<string>\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"auth": null
+			},
+			"response": [
+				{
+					"id": "5ba4944e-da1a-47fa-bf1d-c22db92dfe6b",
+					"name": "200",
+					"originalRequest": {
+						"url": {
+							"path": [
+								"v1",
+								"lending-operations",
+								"redeem-allocated",
+								"submit"
+							],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"description": {
+									"content": "Added as a part of security scheme: apikey",
+									"type": "text/plain"
+								},
+								"key": "x-api-key",
+								"value": "<API Key>"
+							}
+						],
+						"method": "POST",
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"pendingRedeemId\": \"<uuid>\",\n  \"serializedTx\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"header": [],
+					"cookie": [],
+					"_postman_previewlanguage": "text"
+				}
+			],
+			"event": [],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			}
+		},
+		{
+			"id": "91791db6-23e1-46ae-8fa7-9fee75a0d230",
+			"name": "get Health Mode-s",
+			"request": {
+				"name": "get Health Mode-s",
+				"description": {},
+				"url": {
+					"path": ["health", "mode-s"],
+					"host": ["{{baseUrl}}"],
+					"query": [],
+					"variable": []
+				},
+				"method": "GET",
+				"body": {},
+				"auth": null
+			},
+			"response": [
+				{
+					"id": "4a177618-8eb6-43fa-be6c-ae38894a19b7",
+					"name": "200",
+					"originalRequest": {
+						"url": {
+							"path": ["health", "mode-s"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"header": [
+							{
+								"description": {
+									"content": "Added as a part of security scheme: apikey",
+									"type": "text/plain"
+								},
+								"key": "x-api-key",
+								"value": "<API Key>"
+							}
+						],
+						"method": "GET",
+						"body": {}
+					},
+					"status": "OK",
+					"code": 200,
+					"header": [],
+					"cookie": [],
+					"_postman_previewlanguage": "text"
+				}
+			],
+			"event": [],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			}
+		},
+		{
+			"name": "Webhooks",
+			"description": "",
+			"item": [
+				{
+					"id": "5382acde-7665-40f9-8679-7f1ada0e5479",
+					"name": "Receive partner rebalance confirmation",
+					"request": {
+						"name": "Receive partner rebalance confirmation",
+						"description": {
+							"content": "Partner signing-proxy reports the outcome of an async rebalance tx. HMAC-verified via X-Vayo-Signature header using the per-partner secret. Vayo independently verifies the reported signature on-chain before trusting confirmations.",
+							"type": "text/plain"
+						},
+						"url": {
+							"path": ["webhooks", "rebalance-confirmation"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"method": "POST",
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"pendingOperationId\": \"<uuid>\",\n  \"signature\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "2c43a95e-afd6-41e9-af04-595a54933c1a",
+							"name": "Confirmation accepted",
+							"originalRequest": {
+								"url": {
+									"path": ["webhooks", "rebalance-confirmation"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"pendingOperationId\": \"<uuid>\",\n  \"signature\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "ca76404a-1286-4349-8851-a51515ab44fb",
+							"name": "Invalid or missing signature",
+							"originalRequest": {
+								"url": {
+									"path": ["webhooks", "rebalance-confirmation"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"pendingOperationId\": \"<uuid>\",\n  \"signature\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "4b074400-1ec9-4aed-b7ff-1021d576cb98",
+							"name": "Partner id mismatch",
+							"originalRequest": {
+								"url": {
+									"path": ["webhooks", "rebalance-confirmation"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"pendingOperationId\": \"<uuid>\",\n  \"signature\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "2e311e83-04a0-4870-9af4-8edeb0f434a6",
+							"name": "Signature not yet visible on-chain \u2014 partner should retry later",
+							"originalRequest": {
+								"url": {
+									"path": ["webhooks", "rebalance-confirmation"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"pendingOperationId\": \"<uuid>\",\n  \"signature\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"description": "",
+			"item": [
+				{
+					"id": "1974caed-d4d5-46e7-8c26-915d6b60e777",
+					"name": "Health check endpoint",
+					"request": {
+						"name": "Health check endpoint",
+						"description": {
+							"content": "Returns basic health information about the API",
+							"type": "text/plain"
+						},
+						"url": {
+							"path": ["health", ""],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "18bc25ef-1b34-4588-b4f4-ca053fb25d63",
+							"name": "API is healthy and operational",
+							"originalRequest": {
+								"url": {
+									"path": ["health", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "433736c3-ab77-4a9f-93af-49d8f73c4f71",
+					"name": "Readiness check endpoint",
+					"request": {
+						"name": "Readiness check endpoint",
+						"description": {
+							"content": "Returns ready status if the API is ready to handle requests",
+							"type": "text/plain"
+						},
+						"url": {
+							"path": ["health", "ready"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "46488d38-1d84-41de-b716-d8c533838dc2",
+							"name": "API is ready",
+							"originalRequest": {
+								"url": {
+									"path": ["health", "ready"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "d84d9443-2150-4f4d-8379-ae7d86144d17",
+					"name": "Kora fee relayer health check",
+					"request": {
+						"name": "Kora fee relayer health check",
+						"description": {
+							"content": "Returns the status of the Kora gasless transaction relayer. If enabled and available, includes the fee payer address.",
+							"type": "text/plain"
+						},
+						"url": {
+							"path": ["health", "kora"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "c4bae4c3-5c2a-4f18-8ca2-0221825f723e",
+							"name": "Kora relayer status",
+							"originalRequest": {
+								"url": {
+									"path": ["health", "kora"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"description": "",
+			"item": [
+				{
+					"id": "355bc0cf-6385-40dc-8d7b-593e6021b6c2",
+					"name": "Get user transaction history",
+					"request": {
+						"name": "Get user transaction history",
+						"description": {
+							"content": "Returns paginated transaction history for the authenticated user. Supports filtering by transaction type and status.",
+							"type": "text/plain"
+						},
+						"url": {
+							"path": ["transactions", ""],
+							"host": ["{{baseUrl}}"],
+							"query": [
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "type",
+									"value": "<string>"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "status",
+									"value": "<string>"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "limit",
+									"value": "0"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "offset",
+									"value": "0"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "efa4d559-d4ef-4cdd-b4d7-f88fdae3f87b",
+							"name": "Transaction history retrieved successfully",
+							"originalRequest": {
+								"url": {
+									"path": ["transactions", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "type",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "status",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "limit",
+											"value": "0"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "offset",
+											"value": "0"
+										}
+									],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "a0ebdb62-5863-4da5-ae12-312a45dade56",
+							"name": "User not found",
+							"originalRequest": {
+								"url": {
+									"path": ["transactions", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "type",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "status",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "limit",
+											"value": "0"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "offset",
+											"value": "0"
+										}
+									],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "e06c4b4a-4312-48d6-9df1-4dc744cbb4f7",
+					"name": "Prepare a deposit via Privy funding",
+					"request": {
+						"name": "Prepare a deposit via Privy funding",
+						"description": {
+							"content": "Creates a pending deposit_app transaction record. Call this BEFORE opening the Privy funding widget. The record will be confirmed automatically when the deposit is detected via WebSocket.",
+							"type": "text/plain"
+						},
+						"url": {
+							"path": ["transactions", "prepare-deposit"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"method": "POST",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "4f8dbe09-40fe-4058-962a-33b975b127eb",
+							"name": "Pending deposit record created",
+							"originalRequest": {
+								"url": {
+									"path": ["transactions", "prepare-deposit"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "05fc5e62-e3ff-4d12-9524-82b403cc86f0",
+							"name": "User or wallet not found",
+							"originalRequest": {
+								"url": {
+									"path": ["transactions", "prepare-deposit"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				}
+			]
+		},
+		{
+			"name": "Payment Events",
+			"description": "",
+			"item": [
+				{
+					"id": "ca703519-559e-4343-af47-1f125e42b5d1",
+					"name": "Get payment events for the authenticated user",
+					"request": {
+						"name": "Get payment events for the authenticated user",
+						"description": {
+							"content": "Returns paginated PIX payment events for the authenticated user. Only the wallet owner can access their own payment events.",
+							"type": "text/plain"
+						},
+						"url": {
+							"path": ["payment-events", ""],
+							"host": ["{{baseUrl}}"],
+							"query": [
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "type",
+									"value": "<string>"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "status",
+									"value": "<string>"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "limit",
+									"value": "0"
+								},
+								{
+									"disabled": false,
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									},
+									"key": "offset",
+									"value": "0"
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "8078f60f-f7d7-4b7e-8809-492484a67916",
+							"name": "Payment events retrieved successfully",
+							"originalRequest": {
+								"url": {
+									"path": ["payment-events", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "type",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "status",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "limit",
+											"value": "0"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "offset",
+											"value": "0"
+										}
+									],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "39d1fd69-225d-4f32-adb2-fe1f9b9a8ce4",
+							"name": "User not found",
+							"originalRequest": {
+								"url": {
+									"path": ["payment-events", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "type",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "status",
+											"value": "<string>"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "limit",
+											"value": "0"
+										},
+										{
+											"disabled": false,
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"key": "offset",
+											"value": "0"
+										}
+									],
+									"variable": []
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				}
+			]
+		},
+		{
+			"name": "Onramp",
+			"description": "",
+			"item": [
+				{
+					"id": "be75359d-7390-4a3f-bb42-c072b27be66d",
+					"name": "Create an onramp-instant checkout link",
+					"request": {
+						"name": "Create an onramp-instant checkout link",
+						"description": {
+							"content": "Creates a NoxPay onramp-instant checkout link for the authenticated user. The user's agent wallet is automatically used as the destination. Either amountFiat or amountCrypto must be provided; amountCrypto takes priority.",
+							"type": "text/plain"
+						},
+						"url": {
+							"path": ["onramp", ""],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"method": "POST",
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amountFiat\": \"<string>\",\n  \"amountCrypto\": \"<string>\",\n  \"returnUrl\": \"<uri>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "a34155a5-c145-47c5-9fe1-198ad8809235",
+							"name": "Checkout link created successfully",
+							"originalRequest": {
+								"url": {
+									"path": ["onramp", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amountFiat\": \"<string>\",\n  \"amountCrypto\": \"<string>\",\n  \"returnUrl\": \"<uri>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "4120d723-5ed6-416c-ae19-d3e53a19cbe4",
+							"name": "Invalid input (missing amounts)",
+							"originalRequest": {
+								"url": {
+									"path": ["onramp", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amountFiat\": \"<string>\",\n  \"amountCrypto\": \"<string>\",\n  \"returnUrl\": \"<uri>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "28cecd4b-cc78-43d3-a140-e4f56ad03418",
+							"name": "User or wallet not found",
+							"originalRequest": {
+								"url": {
+									"path": ["onramp", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amountFiat\": \"<string>\",\n  \"amountCrypto\": \"<string>\",\n  \"returnUrl\": \"<uri>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "9373009d-72ba-49df-a95a-a5a55d8b2e8b",
+							"name": "NoxPay service temporarily unavailable",
+							"originalRequest": {
+								"url": {
+									"path": ["onramp", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amountFiat\": \"<string>\",\n  \"amountCrypto\": \"<string>\",\n  \"returnUrl\": \"<uri>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "Service Unavailable",
+							"code": 503,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				}
+			]
+		},
+		{
+			"name": "Offramp",
+			"description": "",
+			"item": [
+				{
+					"id": "b202fad3-4c3e-45fa-a2ee-fde950f01955",
+					"name": "Create an offramp-instant checkout link",
+					"request": {
+						"name": "Create an offramp-instant checkout link",
+						"description": {
+							"content": "Creates a NoxPay offramp-instant checkout link for the authenticated user. The user deposits crypto to a NoxPay address and receives BRL via PIX. Either amountFiat or amountCrypto must be provided; amountCrypto takes priority.",
+							"type": "text/plain"
+						},
+						"url": {
+							"path": ["offramp", ""],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": []
+						},
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"method": "POST",
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amountFiat\": \"<string>\",\n  \"amountCrypto\": \"<string>\",\n  \"returnUrl\": \"<uri>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "3c3c0383-990f-49f9-a0f0-d00d0ff9e7e8",
+							"name": "Checkout link created successfully",
+							"originalRequest": {
+								"url": {
+									"path": ["offramp", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amountFiat\": \"<string>\",\n  \"amountCrypto\": \"<string>\",\n  \"returnUrl\": \"<uri>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "b7299fa7-99ac-41f6-b8e9-acc6063e9bab",
+							"name": "Invalid input (missing amounts)",
+							"originalRequest": {
+								"url": {
+									"path": ["offramp", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amountFiat\": \"<string>\",\n  \"amountCrypto\": \"<string>\",\n  \"returnUrl\": \"<uri>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "615bc744-d112-46a8-b1fa-1e96ff5030b3",
+							"name": "User or wallet not found",
+							"originalRequest": {
+								"url": {
+									"path": ["offramp", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amountFiat\": \"<string>\",\n  \"amountCrypto\": \"<string>\",\n  \"returnUrl\": \"<uri>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "541dc085-ee80-4b18-9d77-1f308bff3704",
+							"name": "NoxPay service temporarily unavailable",
+							"originalRequest": {
+								"url": {
+									"path": ["offramp", ""],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": []
+								},
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amountFiat\": \"<string>\",\n  \"amountCrypto\": \"<string>\",\n  \"returnUrl\": \"<uri>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								}
+							},
+							"status": "Service Unavailable",
+							"code": 503,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				},
+				{
+					"id": "a5f6b327-9313-4bf8-a4af-4e6c1341b365",
+					"name": "Get offramp transaction status",
+					"request": {
+						"name": "Get offramp transaction status",
+						"description": {
+							"content": "Polls the NoxPay transaction status by end2end ID. Used to detect when the checkout reaches WAITING_DEPOSIT.",
+							"type": "text/plain"
+						},
+						"url": {
+							"path": ["offramp", "status", ":end2end"],
+							"host": ["{{baseUrl}}"],
+							"query": [],
+							"variable": [
+								{
+									"type": "any",
+									"value": "<string>",
+									"key": "end2end",
+									"disabled": false,
+									"description": {
+										"content": "(Required) ",
+										"type": "text/plain"
+									}
+								}
+							]
+						},
+						"method": "GET",
+						"body": {},
+						"auth": null
+					},
+					"response": [
+						{
+							"id": "ab6a9b60-eaff-425a-ba61-5c9acc2ed691",
+							"name": "Transaction status retrieved",
+							"originalRequest": {
+								"url": {
+									"path": ["offramp", "status", ":end2end"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "(Required) ",
+												"type": "text/plain"
+											},
+											"type": "any",
+											"value": "<string>",
+											"key": "end2end"
+										}
+									]
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "OK",
+							"code": 200,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "daf0950f-6fc8-4f43-8337-5abe4c390451",
+							"name": "Missing end2end ID",
+							"originalRequest": {
+								"url": {
+									"path": ["offramp", "status", ":end2end"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "(Required) ",
+												"type": "text/plain"
+											},
+											"type": "any",
+											"value": "<string>",
+											"key": "end2end"
+										}
+									]
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "74bbcbe3-1c62-4964-93c9-7e71bf6dbd75",
+							"name": "Transaction not found",
+							"originalRequest": {
+								"url": {
+									"path": ["offramp", "status", ":end2end"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "(Required) ",
+												"type": "text/plain"
+											},
+											"type": "any",
+											"value": "<string>",
+											"key": "end2end"
+										}
+									]
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						},
+						{
+							"id": "5fe8e759-cd07-478e-bc6f-b14c807ebf48",
+							"name": "NoxPay service temporarily unavailable",
+							"originalRequest": {
+								"url": {
+									"path": ["offramp", "status", ":end2end"],
+									"host": ["{{baseUrl}}"],
+									"query": [],
+									"variable": [
+										{
+											"disabled": false,
+											"description": {
+												"content": "(Required) ",
+												"type": "text/plain"
+											},
+											"type": "any",
+											"value": "<string>",
+											"key": "end2end"
+										}
+									]
+								},
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: apikey",
+											"type": "text/plain"
+										},
+										"key": "x-api-key",
+										"value": "<API Key>"
+									}
+								],
+								"method": "GET",
+								"body": {}
+							},
+							"status": "Service Unavailable",
+							"code": 503,
+							"header": [],
+							"cookie": [],
+							"_postman_previewlanguage": "text"
+						}
+					],
+					"event": [],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{apiKey}}",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api.vayo.finance",
+			"type": "string"
+		},
+		{
+			"key": "apiKey",
+			"value": "vayo_pk_REPLACE_ME",
+			"type": "string"
+		},
+		{
+			"key": "userJwt",
+			"value": "REPLACE_WITH_PRIVY_USER_JWT",
+			"type": "string"
+		},
+		{
+			"key": "usdcMint",
+			"value": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+			"type": "string"
+		}
+	],
+	"info": {
+		"_postman_id": "8b1f0e2e-vayo-partner-v1",
+		"name": "Vayo Finance Partner API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"description": "Partner-facing routes: Mode S build/submit, lending market reads, dashboard analytics, payments (on/off-ramp + transactions), health probes, and the inbound rebalance-confirmation webhook. Mode V was removed in 2026 \u2014 partners now sign locally for every operation. Set the collection variables (baseUrl, apiKey) before running. Mutating requests include a fresh Idempotency-Key by default; reuse the same key when retrying.\n\nRegenerate via openapi-to-postmanv2 from packages/core-sdk/openapi.json after re-exporting the spec."
+	}
+}
