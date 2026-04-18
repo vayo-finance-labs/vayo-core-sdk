@@ -47,6 +47,7 @@ import {
 	postV1LendingOperationsRedeemAllocatedSubmit,
 } from "./generated";
 import type { ClientContext, RequestConfig } from "./http";
+import { client as rawHttpClient } from "./http";
 import { createModeSHelper, type ModeSHelper } from "./mode-s/redeem";
 
 // ─── Public options ────────────────────────────────────────────────────
@@ -148,8 +149,14 @@ export interface DashboardMethods {
 	apiKeys(args?: CallOptions): Promise<unknown>;
 }
 
-/** `client.health.*` — signing subsystem health. */
+/** `client.health.*` — service + signing subsystem health. */
 export interface HealthMethods {
+	/** Basic liveness probe. @see GET /health */
+	liveness(args?: CallOptions): Promise<unknown>;
+	/** Readiness probe. @see GET /health/ready */
+	ready(args?: CallOptions): Promise<unknown>;
+	/** Kora gasless relayer health. @see GET /health/kora */
+	kora(args?: CallOptions): Promise<unknown>;
 	/** Mode S witness/cosigner health. @see GET /health/mode-s */
 	modeS(args?: CallOptions): Promise<unknown>;
 }
@@ -308,7 +315,22 @@ export function createVayoPartnerClient(
 		apiKeys: (args) => getV1DashboardApiKeys(cfg({ signal: args?.signal })),
 	};
 
+	// Health subprobes outside `/health/mode-s` are not in the OpenAPI spec, so
+	// they're not kubb-generated — call the raw http client directly.
+	const healthGet = async (url: string, signal?: AbortSignal) => {
+		const res = await rawHttpClient<unknown>({
+			method: "GET",
+			url,
+			signal,
+			context: { ...ctxBase, idempotencyKey: undefined },
+		});
+		return res.data;
+	};
+
 	const health: HealthMethods = {
+		liveness: (args) => healthGet("/health", args?.signal),
+		ready: (args) => healthGet("/health/ready", args?.signal),
+		kora: (args) => healthGet("/health/kora", args?.signal),
 		modeS: (args) => getHealthModeS(cfg({ signal: args?.signal })),
 	};
 
