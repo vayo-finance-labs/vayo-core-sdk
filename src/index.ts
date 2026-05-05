@@ -29,6 +29,8 @@ export {
 	type SubmitSignedRedeemResponse,
 	type VayoPartnerClient,
 	type VayoPartnerClientOptions,
+	type WalletMethods,
+	type WebhooksMethods,
 } from "./client";
 export { U64_MAX, USDC_MINT } from "./constants";
 export { VayoApiError, type VayoErrorBody } from "./errors";
@@ -50,8 +52,31 @@ export type {
 	RedeemModeSResult,
 	SignTransactionCallback,
 } from "./mode-s/redeem";
+export type {
+	BuildSupplyResponse,
+	ModeSSupplyHelper,
+	SubmitSignedSupplyResponse,
+	SupplyModeSInput,
+	SupplyModeSResult,
+} from "./mode-s/supply";
 export {
 	assertFeeRecipientsMatch,
 	type ExpectedFeeRecipients,
 	type ObservedFeeRecipient,
 } from "./mode-s/verify-fee-recipients";
+export type {
+	PrepareWithdrawalResponse,
+	SubmitWithdrawalResponse,
+	WalletHelper,
+	WithdrawInput,
+	WithdrawResult,
+} from "./wallet/withdraw";
+export {
+	type CreateWebhookSubscriptionResponse,
+	type DispatchWebhookEventResponse,
+	type ListWebhookDeliveriesResponse,
+	type RotateWebhookSecretResponse,
+	verifyWebhookSignature,
+	type WebhookDelivery,
+	type WebhookSubscription,
+} from "./webhooks";
