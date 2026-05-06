@@ -163,6 +163,47 @@ export interface ModeSMethods extends ModeSHelper, ModeSSupplyHelper {
 			body: { pendingSupplyId: string; serializedTx: string };
 		} & CallOptions,
 	): Promise<SubmitSignedSupplyResponse>;
+	/**
+	 * Confirm a redeem the partner submitted on-chain via their own RPC/signer.
+	 * Vayo fetches the tx by signature, verifies the witness memo
+	 * `vayo-witness:<pendingRedeemId>` is present, and marks the pending row
+	 * confirmed.
+	 * @see POST /v1/lending-operations/redeem-allocated/confirm
+	 */
+	confirmRedeem(
+		args: {
+			body: {
+				pendingRedeemId: string;
+				signature: string;
+				marketAddress: string;
+				status?: "confirmed" | "failed";
+				errorMessage?: string;
+			};
+		} & CallOptions,
+	): Promise<ConfirmModeSResponse>;
+	/**
+	 * Confirm a supply the partner submitted on-chain via their own RPC/signer.
+	 * @see POST /v1/lending-operations/supply-allocated/confirm
+	 */
+	confirmSupply(
+		args: {
+			body: {
+				pendingSupplyId: string;
+				signature: string;
+				marketAddress: string;
+				status?: "confirmed" | "failed";
+				errorMessage?: string;
+			};
+		} & CallOptions,
+	): Promise<ConfirmModeSResponse>;
+}
+
+export interface ConfirmModeSResponse {
+	accepted: boolean;
+	idempotent?: boolean;
+	recorded?: "confirmed" | "failed";
+	signature?: string;
+	reason?: string;
 }
 
 /** `client.wallet.*` — async memo-challenge withdrawal. */
@@ -413,6 +454,28 @@ export function createVayoPartnerClient(
 			{ body, idempotencyKey, signal },
 		);
 
+	const confirmRedeem: ModeSMethods["confirmRedeem"] = ({
+		body,
+		idempotencyKey,
+		signal,
+	}) =>
+		rawCall<ConfirmModeSResponse>(
+			"POST",
+			"/v1/lending-operations/redeem-allocated/confirm",
+			{ body, idempotencyKey, signal },
+		);
+
+	const confirmSupply: ModeSMethods["confirmSupply"] = ({
+		body,
+		idempotencyKey,
+		signal,
+	}) =>
+		rawCall<ConfirmModeSResponse>(
+			"POST",
+			"/v1/lending-operations/supply-allocated/confirm",
+			{ body, idempotencyKey, signal },
+		);
+
 	const modeSSupplyHelper = createModeSSupplyHelper({
 		buildSupply,
 		submitSignedSupply,
@@ -425,6 +488,8 @@ export function createVayoPartnerClient(
 		buildSupply,
 		submitSignedSupply,
 		supply: modeSSupplyHelper.supply,
+		confirmRedeem,
+		confirmSupply,
 	};
 
 	const prepareWithdrawal: WalletMethods["prepareWithdrawal"] = ({
