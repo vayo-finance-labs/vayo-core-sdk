@@ -26,6 +26,7 @@ export {
 	type HealthMethods,
 	type LendingMethods,
 	type ModeSMethods,
+	type PositionsMethods,
 	type SubmitSignedRedeemResponse,
 	type VayoPartnerClient,
 	type VayoPartnerClientOptions,
@@ -64,6 +65,11 @@ export {
 	type ExpectedFeeRecipients,
 	type ObservedFeeRecipient,
 } from "./mode-s/verify-fee-recipients";
+export type {
+	PositionRewardEntry,
+	ReadPositionsResponse,
+	UserPosition,
+} from "./positions/read";
 export type {
 	PrepareWithdrawalResponse,
 	SubmitWithdrawalResponse,

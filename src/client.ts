@@ -55,6 +55,7 @@ import {
 	type ModeSSupplyHelper,
 	type SubmitSignedSupplyResponse,
 } from "./mode-s/supply";
+import type { ReadPositionsResponse } from "./positions/read";
 import {
 	createWalletHelper,
 	type PrepareWithdrawalResponse,
@@ -206,6 +207,33 @@ export interface ConfirmModeSResponse {
 	reason?: string;
 }
 
+/** `client.positions.*` — read live Kamino positions for a partner-user. */
+export interface PositionsMethods {
+	/**
+	 * Read a user's live Kamino positions (supplied amounts, accumulated yield,
+	 * per-market breakdown). The user must sign a memo intent of the form
+	 * `vayo:read-positions:<walletAddress>:<partnerSlug>:<unixSeconds>` with
+	 * their wallet — the signed transaction is never broadcast on-chain. The
+	 * memo is partner-bound so a signature authorized for partner A cannot be
+	 * replayed by partner B.
+	 *
+	 * @see POST /v1/positions/read
+	 */
+	read(
+		args: {
+			body: {
+				/** Solana wallet address (base58) whose positions to read. */
+				walletAddress: string;
+				/**
+				 * Base64 V0 transaction with a single Memo instruction signed by
+				 * the wallet owner.
+				 */
+				signedIntentTransaction: string;
+			};
+		} & CallOptions,
+	): Promise<ReadPositionsResponse>;
+}
+
 /** `client.wallet.*` — async memo-challenge withdrawal. */
 export interface WalletMethods extends WalletHelper {
 	/** @see POST /v1/wallet/withdraw/prepare */
@@ -339,6 +367,7 @@ export interface VayoPartnerClient {
 	lending: LendingMethods;
 	modeS: ModeSMethods;
 	wallet: WalletMethods;
+	positions: PositionsMethods;
 	webhooks: WebhooksMethods;
 	dashboard: DashboardMethods;
 	health: HealthMethods;
@@ -525,6 +554,15 @@ export function createVayoPartnerClient(
 		withdraw: walletHelper.withdraw,
 	};
 
+	const positions: PositionsMethods = {
+		read: ({ body, idempotencyKey, signal }) =>
+			rawCall<ReadPositionsResponse>("POST", "/v1/positions/read", {
+				body,
+				idempotencyKey,
+				signal,
+			}),
+	};
+
 	const webhooks: WebhooksMethods = {
 		create: ({ body, idempotencyKey, signal }) =>
 			rawCall<CreateWebhookSubscriptionResponse>("POST", "/v1/webhooks", {
@@ -631,6 +669,7 @@ export function createVayoPartnerClient(
 		lending,
 		modeS,
 		wallet,
+		positions,
 		webhooks,
 		dashboard,
 		health,
