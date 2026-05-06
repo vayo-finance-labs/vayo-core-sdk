@@ -363,6 +363,28 @@ export interface SubmitSignedRedeemResponse {
 
 // ─── Top-level client interface ────────────────────────────────────────
 
+/** `client.agents.*` — self-provisioning for BYOW agents (no Privy). */
+export interface AgentsMethods {
+	/**
+	 * Mint a Vayo identity (`user` + `agent_wallet`) for a wallet the agent
+	 * controls itself. Idempotent. Returns `{ privyDid, userId, walletAddress,
+	 * created }` — pass the `privyDid` to subsequent Mode-S calls.
+	 * @see POST /v1/agents/provision
+	 */
+	provision(
+		args: {
+			body: { walletAddress: string };
+		} & CallOptions,
+	): Promise<ProvisionAgentResponse>;
+}
+
+export interface ProvisionAgentResponse {
+	privyDid: string;
+	userId: string;
+	walletAddress: string;
+	created: boolean;
+}
+
 export interface VayoPartnerClient {
 	lending: LendingMethods;
 	modeS: ModeSMethods;
@@ -371,6 +393,7 @@ export interface VayoPartnerClient {
 	webhooks: WebhooksMethods;
 	dashboard: DashboardMethods;
 	health: HealthMethods;
+	agents: AgentsMethods;
 	/** Read-only view of the SDK options the client was constructed with. */
 	readonly options: Readonly<VayoPartnerClientOptions>;
 }
@@ -665,6 +688,15 @@ export function createVayoPartnerClient(
 		modeS: (args) => getHealthModeS(cfg({ signal: args?.signal })),
 	};
 
+	const agents: AgentsMethods = {
+		provision: ({ body, idempotencyKey, signal }) =>
+			rawCall<ProvisionAgentResponse>("POST", "/v1/agents/provision", {
+				body,
+				idempotencyKey,
+				signal,
+			}),
+	};
+
 	return {
 		lending,
 		modeS,
@@ -673,6 +705,7 @@ export function createVayoPartnerClient(
 		webhooks,
 		dashboard,
 		health,
+		agents,
 		options: Object.freeze({ ...options }),
 	};
 }
