@@ -4,7 +4,7 @@
  * Vayo Finance Partner SDK — Mode S redeem example
  *
  * Demonstrates the full Mode S `/build → verify → sign → /submit` flow on
- * top of `@vayo/core-sdk`. This file used to be ~250 lines of hand-rolled
+ * top of `@vayolabs/core-sdk`. This file used to be ~250 lines of hand-rolled
  * fetch + Privy plumbing — now it's a single `client.modeS.redeem()` call.
  *
  * Run:
@@ -31,8 +31,8 @@ import {
 	U64_MAX,
 	USDC_MINT,
 	VayoApiError,
-} from "@vayo/core-sdk";
-import { createPrivySigner } from "@vayo/core-sdk/mode-s/privy";
+} from "@vayolabs/core-sdk";
+import { createPrivySigner } from "@vayolabs/core-sdk/mode-s/privy";
 
 function required(key: string): string {
 	const value = process.env[key];

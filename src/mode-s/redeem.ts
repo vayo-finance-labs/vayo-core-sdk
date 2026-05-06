@@ -40,7 +40,7 @@ import {
  *   2. Hand to a signer SDK (Privy, Squads, etc.)
  *   3. Re-encode the resulting fully-signed transaction → base64
  *
- * For Privy users, see `@vayo/core-sdk/mode-s/privy` which exports a
+ * For Privy users, see `@vayolabs/core-sdk/mode-s/privy` which exports a
  * pre-built `createPrivySigner()` adapter.
  */
 export type SignTransactionCallback = (
@@ -58,7 +58,7 @@ export interface RedeemModeSInput {
 	/** Token mint (e.g. USDC). */
 	tokenMint: string;
 	/**
-	 * Token base units. Pass `U64_MAX` (from `@vayo/core-sdk`) for a full
+	 * Token base units. Pass `U64_MAX` (from `@vayolabs/core-sdk`) for a full
 	 * redeem. Defaults to `U64_MAX` if omitted.
 	 */
 	amount?: string;

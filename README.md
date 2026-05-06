@@ -1,4 +1,4 @@
-# @vayo/core-sdk
+# @vayolabs/core-sdk
 
 Official TypeScript SDK for the [Vayo Finance](https://vayo.finance) Partner
 API. Lets partners deposit, redeem, and manage USDC lending positions on
@@ -14,15 +14,15 @@ splitting is guaranteed.
 ## Install
 
 ```bash
-bun add @vayo/core-sdk
+bun add @vayolabs/core-sdk
 # or
-npm install @vayo/core-sdk
+npm install @vayolabs/core-sdk
 # or
-pnpm add @vayo/core-sdk
+pnpm add @vayolabs/core-sdk
 ```
 
 The SDK has **zero runtime dependencies**. The optional Privy signing
-adapter (`@vayo/core-sdk/mode-s/privy`) is the only path that needs
+adapter (`@vayolabs/core-sdk/mode-s/privy`) is the only path that needs
 `@privy-io/node` — and even there, the partner constructs the
 `PrivyClient` themselves and passes it in, so the SDK only consumes Privy
 *types*. Partners using other signers (Squads, Phantom, custom HSMs) pay
@@ -31,7 +31,7 @@ zero install cost.
 ## 60-second quickstart
 
 ```ts
-import { createVayoPartnerClient } from '@vayo/core-sdk'
+import { createVayoPartnerClient } from '@vayolabs/core-sdk'
 
 const vayo = createVayoPartnerClient({
   baseUrl: 'https://api.vayo.finance',
@@ -56,7 +56,7 @@ The `client.modeS.redeem()` orchestrator runs the full
 provide — works with any signer.
 
 ```ts
-import { createVayoPartnerClient, U64_MAX, USDC_MINT } from '@vayo/core-sdk'
+import { createVayoPartnerClient, U64_MAX, USDC_MINT } from '@vayolabs/core-sdk'
 
 const vayo = createVayoPartnerClient({
   baseUrl: 'https://api.vayo.finance',
@@ -90,12 +90,12 @@ console.log(result.signature) // confirmed Solana signature
 ## Privy signer (one-liner)
 
 For partners using Privy, the SDK ships an opt-in adapter at
-`@vayo/core-sdk/mode-s/privy`. It bridges `@privy-io/node` to the
+`@vayolabs/core-sdk/mode-s/privy`. It bridges `@privy-io/node` to the
 `signTransaction` callback so you don't have to write any signing code:
 
 ```ts
-import { createVayoPartnerClient, U64_MAX, USDC_MINT } from '@vayo/core-sdk'
-import { createPrivySigner } from '@vayo/core-sdk/mode-s/privy'
+import { createVayoPartnerClient, U64_MAX, USDC_MINT } from '@vayolabs/core-sdk'
+import { createPrivySigner } from '@vayolabs/core-sdk/mode-s/privy'
 import { PrivyClient } from '@privy-io/node'
 
 const vayo = createVayoPartnerClient({
@@ -158,7 +158,7 @@ Non-2xx responses throw a structured `VayoApiError` with the API's
 correlation id for log grepping:
 
 ```ts
-import { VayoApiError } from '@vayo/core-sdk'
+import { VayoApiError } from '@vayolabs/core-sdk'
 
 try {
   await vayo.modeS.submitSignedRedeem({ body })

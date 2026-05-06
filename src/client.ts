@@ -49,6 +49,26 @@ import {
 import type { ClientContext, RequestConfig } from "./http";
 import { client as rawHttpClient } from "./http";
 import { createModeSHelper, type ModeSHelper } from "./mode-s/redeem";
+import {
+	type BuildSupplyResponse,
+	createModeSSupplyHelper,
+	type ModeSSupplyHelper,
+	type SubmitSignedSupplyResponse,
+} from "./mode-s/supply";
+import type { ReadPositionsResponse } from "./positions/read";
+import {
+	createWalletHelper,
+	type PrepareWithdrawalResponse,
+	type SubmitWithdrawalResponse,
+	type WalletHelper,
+} from "./wallet/withdraw";
+import type {
+	CreateWebhookSubscriptionResponse,
+	DispatchWebhookEventResponse,
+	ListWebhookDeliveriesResponse,
+	RotateWebhookSecretResponse,
+	WebhookSubscription,
+} from "./webhooks";
 
 // ─── Public options ────────────────────────────────────────────────────
 
@@ -98,8 +118,8 @@ export interface LendingMethods {
 	): Promise<unknown>;
 }
 
-/** `client.modeS.*` — build/submit + opinionated `redeem()` orchestrator. */
-export interface ModeSMethods extends ModeSHelper {
+/** `client.modeS.*` — build/submit + opinionated `redeem()` and `supply()` orchestrators. */
+export interface ModeSMethods extends ModeSHelper, ModeSSupplyHelper {
 	/**
 	 * Build a partially-signed redeem tx with the witness cosignature.
 	 * @see POST /v1/lending-operations/redeem-allocated/build
@@ -119,6 +139,153 @@ export interface ModeSMethods extends ModeSHelper {
 			body: PostV1LendingOperationsRedeemAllocatedSubmitMutationRequest;
 		} & CallOptions,
 	): Promise<SubmitSignedRedeemResponse>;
+	/**
+	 * Build a partially-signed supply tx with the witness cosignature.
+	 * @see POST /v1/lending-operations/supply-allocated/build
+	 */
+	buildSupply(
+		args: {
+			body: {
+				privyDid: string;
+				marketAddress: string;
+				tokenMint: string;
+				amount: string;
+				reserveAddress?: string;
+			};
+			query?: { gasless?: "true" | "false" };
+		} & CallOptions,
+	): Promise<BuildSupplyResponse>;
+	/**
+	 * Submit a fully-signed supply tx (Vayo re-verifies cosigners + relays).
+	 * @see POST /v1/lending-operations/supply-allocated/submit
+	 */
+	submitSignedSupply(
+		args: {
+			body: { pendingSupplyId: string; serializedTx: string };
+		} & CallOptions,
+	): Promise<SubmitSignedSupplyResponse>;
+	/**
+	 * Confirm a redeem the partner submitted on-chain via their own RPC/signer.
+	 * Vayo fetches the tx by signature, verifies the witness memo
+	 * `vayo-witness:<pendingRedeemId>` is present, and marks the pending row
+	 * confirmed.
+	 * @see POST /v1/lending-operations/redeem-allocated/confirm
+	 */
+	confirmRedeem(
+		args: {
+			body: {
+				pendingRedeemId: string;
+				signature: string;
+				marketAddress: string;
+				status?: "confirmed" | "failed";
+				errorMessage?: string;
+			};
+		} & CallOptions,
+	): Promise<ConfirmModeSResponse>;
+	/**
+	 * Confirm a supply the partner submitted on-chain via their own RPC/signer.
+	 * @see POST /v1/lending-operations/supply-allocated/confirm
+	 */
+	confirmSupply(
+		args: {
+			body: {
+				pendingSupplyId: string;
+				signature: string;
+				marketAddress: string;
+				status?: "confirmed" | "failed";
+				errorMessage?: string;
+			};
+		} & CallOptions,
+	): Promise<ConfirmModeSResponse>;
+}
+
+export interface ConfirmModeSResponse {
+	accepted: boolean;
+	idempotent?: boolean;
+	recorded?: "confirmed" | "failed";
+	signature?: string;
+	reason?: string;
+}
+
+/** `client.positions.*` — read live Kamino positions for a partner-user. */
+export interface PositionsMethods {
+	/**
+	 * Read a user's live Kamino positions (supplied amounts, accumulated yield,
+	 * per-market breakdown). The user must sign a memo intent of the form
+	 * `vayo:read-positions:<walletAddress>:<partnerSlug>:<unixSeconds>` with
+	 * their wallet — the signed transaction is never broadcast on-chain. The
+	 * memo is partner-bound so a signature authorized for partner A cannot be
+	 * replayed by partner B.
+	 *
+	 * @see POST /v1/positions/read
+	 */
+	read(
+		args: {
+			body: {
+				/** Solana wallet address (base58) whose positions to read. */
+				walletAddress: string;
+				/**
+				 * Base64 V0 transaction with a single Memo instruction signed by
+				 * the wallet owner.
+				 */
+				signedIntentTransaction: string;
+			};
+		} & CallOptions,
+	): Promise<ReadPositionsResponse>;
+}
+
+/** `client.wallet.*` — async memo-challenge withdrawal. */
+export interface WalletMethods extends WalletHelper {
+	/** @see POST /v1/wallet/withdraw/prepare */
+	prepareWithdrawal(
+		args: {
+			body: {
+				privyDid: string;
+				destinationAddress: string;
+				amount: string;
+				exactRecipientAmount?: boolean;
+			};
+		} & CallOptions,
+	): Promise<PrepareWithdrawalResponse>;
+	/** @see POST /v1/wallet/withdraw/submit */
+	submitWithdrawal(
+		args: {
+			body: { pendingWithdrawalId: string; signedIntentTransaction: string };
+		} & CallOptions,
+	): Promise<SubmitWithdrawalResponse>;
+}
+
+/** `client.webhooks.*` — outbound event subscriptions. */
+export interface WebhooksMethods {
+	/** @see POST /v1/webhooks */
+	create(
+		args: {
+			body: { url: string; events: string[]; description?: string };
+		} & CallOptions,
+	): Promise<CreateWebhookSubscriptionResponse>;
+	/** @see GET /v1/webhooks */
+	list(args?: CallOptions): Promise<WebhookSubscription[]>;
+	/** @see DELETE /v1/webhooks/:subscriptionId */
+	delete(
+		args: { subscriptionId: string } & CallOptions,
+	): Promise<{ deleted: true }>;
+	/** @see POST /v1/webhooks/:subscriptionId/rotate-secret */
+	rotateSecret(
+		args: { subscriptionId: string } & CallOptions,
+	): Promise<RotateWebhookSecretResponse>;
+	/** @see POST /v1/webhooks/:subscriptionId/test */
+	test(
+		args: { subscriptionId: string } & CallOptions,
+	): Promise<DispatchWebhookEventResponse>;
+	/** @see GET /v1/webhooks/:subscriptionId/deliveries */
+	deliveries(
+		args: {
+			subscriptionId: string;
+			cursor?: string;
+			limit?: number;
+			status?: "pending" | "delivered" | "retrying" | "permanently_failed";
+		} & CallOptions,
+	): Promise<ListWebhookDeliveriesResponse>;
 }
 
 /** `client.dashboard.*` — partner self-service analytics. */
@@ -196,11 +363,37 @@ export interface SubmitSignedRedeemResponse {
 
 // ─── Top-level client interface ────────────────────────────────────────
 
+/** `client.agents.*` — self-provisioning for BYOW agents (no Privy). */
+export interface AgentsMethods {
+	/**
+	 * Mint a Vayo identity (`user` + `agent_wallet`) for a wallet the agent
+	 * controls itself. Idempotent. Returns `{ privyDid, userId, walletAddress,
+	 * created }` — pass the `privyDid` to subsequent Mode-S calls.
+	 * @see POST /v1/agents/provision
+	 */
+	provision(
+		args: {
+			body: { walletAddress: string };
+		} & CallOptions,
+	): Promise<ProvisionAgentResponse>;
+}
+
+export interface ProvisionAgentResponse {
+	privyDid: string;
+	userId: string;
+	walletAddress: string;
+	created: boolean;
+}
+
 export interface VayoPartnerClient {
 	lending: LendingMethods;
 	modeS: ModeSMethods;
+	wallet: WalletMethods;
+	positions: PositionsMethods;
+	webhooks: WebhooksMethods;
 	dashboard: DashboardMethods;
 	health: HealthMethods;
+	agents: AgentsMethods;
 	/** Read-only view of the SDK options the client was constructed with. */
 	readonly options: Readonly<VayoPartnerClientOptions>;
 }
@@ -268,10 +461,171 @@ export function createVayoPartnerClient(
 		) as Promise<SubmitSignedRedeemResponse>;
 
 	const modeSHelper = createModeSHelper({ buildRedeem, submitSignedRedeem });
+
+	const rawCall = async <TResp>(
+		method: "GET" | "POST" | "DELETE",
+		url: string,
+		opts: {
+			body?: unknown;
+			idempotencyKey?: string;
+			signal?: AbortSignal;
+		} = {},
+	): Promise<TResp> => {
+		const res = await rawHttpClient<TResp>({
+			method,
+			url,
+			data: opts.body as never,
+			signal: opts.signal,
+			context: { ...ctxBase, idempotencyKey: opts.idempotencyKey },
+		});
+		return res.data;
+	};
+
+	const buildSupply: ModeSMethods["buildSupply"] = ({
+		body,
+		query,
+		idempotencyKey,
+		signal,
+	}) => {
+		const qs = query?.gasless ? `?gasless=${query.gasless}` : "";
+		return rawCall<BuildSupplyResponse>(
+			"POST",
+			`/v1/lending-operations/supply-allocated/build${qs}`,
+			{ body, idempotencyKey, signal },
+		);
+	};
+
+	const submitSignedSupply: ModeSMethods["submitSignedSupply"] = ({
+		body,
+		idempotencyKey,
+		signal,
+	}) =>
+		rawCall<SubmitSignedSupplyResponse>(
+			"POST",
+			"/v1/lending-operations/supply-allocated/submit",
+			{ body, idempotencyKey, signal },
+		);
+
+	const confirmRedeem: ModeSMethods["confirmRedeem"] = ({
+		body,
+		idempotencyKey,
+		signal,
+	}) =>
+		rawCall<ConfirmModeSResponse>(
+			"POST",
+			"/v1/lending-operations/redeem-allocated/confirm",
+			{ body, idempotencyKey, signal },
+		);
+
+	const confirmSupply: ModeSMethods["confirmSupply"] = ({
+		body,
+		idempotencyKey,
+		signal,
+	}) =>
+		rawCall<ConfirmModeSResponse>(
+			"POST",
+			"/v1/lending-operations/supply-allocated/confirm",
+			{ body, idempotencyKey, signal },
+		);
+
+	const modeSSupplyHelper = createModeSSupplyHelper({
+		buildSupply,
+		submitSignedSupply,
+	});
+
 	const modeS: ModeSMethods = {
 		buildRedeem,
 		submitSignedRedeem,
 		redeem: modeSHelper.redeem,
+		buildSupply,
+		submitSignedSupply,
+		supply: modeSSupplyHelper.supply,
+		confirmRedeem,
+		confirmSupply,
+	};
+
+	const prepareWithdrawal: WalletMethods["prepareWithdrawal"] = ({
+		body,
+		idempotencyKey,
+		signal,
+	}) =>
+		rawCall<PrepareWithdrawalResponse>("POST", "/v1/wallet/withdraw/prepare", {
+			body,
+			idempotencyKey,
+			signal,
+		});
+
+	const submitWithdrawal: WalletMethods["submitWithdrawal"] = ({
+		body,
+		idempotencyKey,
+		signal,
+	}) =>
+		rawCall<SubmitWithdrawalResponse>("POST", "/v1/wallet/withdraw/submit", {
+			body,
+			idempotencyKey,
+			signal,
+		});
+
+	const walletHelper = createWalletHelper({
+		prepareWithdrawal,
+		submitWithdrawal,
+	});
+
+	const wallet: WalletMethods = {
+		prepareWithdrawal,
+		submitWithdrawal,
+		withdraw: walletHelper.withdraw,
+	};
+
+	const positions: PositionsMethods = {
+		read: ({ body, idempotencyKey, signal }) =>
+			rawCall<ReadPositionsResponse>("POST", "/v1/positions/read", {
+				body,
+				idempotencyKey,
+				signal,
+			}),
+	};
+
+	const webhooks: WebhooksMethods = {
+		create: ({ body, idempotencyKey, signal }) =>
+			rawCall<CreateWebhookSubscriptionResponse>("POST", "/v1/webhooks", {
+				body,
+				idempotencyKey,
+				signal,
+			}),
+		list: (args) =>
+			rawCall<WebhookSubscription[]>("GET", "/v1/webhooks", {
+				signal: args?.signal,
+			}),
+		delete: ({ subscriptionId, idempotencyKey, signal }) =>
+			rawCall<{ deleted: true }>("DELETE", `/v1/webhooks/${subscriptionId}`, {
+				idempotencyKey,
+				signal,
+			}),
+		rotateSecret: ({ subscriptionId, idempotencyKey, signal }) =>
+			rawCall<RotateWebhookSecretResponse>(
+				"POST",
+				`/v1/webhooks/${subscriptionId}/rotate-secret`,
+				{ idempotencyKey, signal },
+			),
+		test: ({ subscriptionId, idempotencyKey, signal }) =>
+			rawCall<DispatchWebhookEventResponse>(
+				"POST",
+				`/v1/webhooks/${subscriptionId}/test`,
+				{ idempotencyKey, signal },
+			),
+		deliveries: ({ subscriptionId, cursor, limit, status, signal }) => {
+			const params = new URLSearchParams();
+			if (cursor) params.set("cursor", cursor);
+			if (limit !== undefined) params.set("limit", String(limit));
+			if (status) params.set("status", status);
+			const qs = params.toString();
+			return rawCall<ListWebhookDeliveriesResponse>(
+				"GET",
+				`/v1/webhooks/${subscriptionId}/deliveries${qs ? `?${qs}` : ""}`,
+				{ signal },
+			);
+		},
 	};
 
 	const dashboard: DashboardMethods = {
@@ -334,11 +688,24 @@ export function createVayoPartnerClient(
 		modeS: (args) => getHealthModeS(cfg({ signal: args?.signal })),
 	};
 
+	const agents: AgentsMethods = {
+		provision: ({ body, idempotencyKey, signal }) =>
+			rawCall<ProvisionAgentResponse>("POST", "/v1/agents/provision", {
+				body,
+				idempotencyKey,
+				signal,
+			}),
+	};
+
 	return {
 		lending,
 		modeS,
+		wallet,
+		positions,
+		webhooks,
 		dashboard,
 		health,
+		agents,
 		options: Object.freeze({ ...options }),
 	};
 }

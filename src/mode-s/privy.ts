@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /**
- * Optional Privy signer adapter — `@vayo/core-sdk/mode-s/privy`.
+ * Optional Privy signer adapter — `@vayolabs/core-sdk/mode-s/privy`.
  *
  * Bridges `@privy-io/node` to the SDK's `SignTransactionCallback` so Privy
  * partners can plug their wallet into `client.modeS.redeem()` in one line:
  *
  * ```ts
- * import { createVayoPartnerClient, U64_MAX } from '@vayo/core-sdk'
- * import { createPrivySigner } from '@vayo/core-sdk/mode-s/privy'
+ * import { createVayoPartnerClient, U64_MAX } from '@vayolabs/core-sdk'
+ * import { createPrivySigner } from '@vayolabs/core-sdk/mode-s/privy'
  * import { PrivyClient } from '@privy-io/node'
  *
  * const privy = new PrivyClient({ appId: '...', appSecret: '...' })
