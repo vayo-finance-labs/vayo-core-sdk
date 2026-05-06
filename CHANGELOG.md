@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `@vayo/core-sdk` are documented here.
+All notable changes to `@vayolabs/core-sdk` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
@@ -27,11 +27,11 @@ Initial public release.
   `/submit` fails.
 - **`assertFeeRecipientsMatch()`** — exported Defense-3 mirror so partners
   can verify fee recipients independently of the orchestrator.
-- **`@vayo/core-sdk/mode-s/privy`** sub-export with
+- **`@vayolabs/core-sdk/mode-s/privy`** sub-export with
   `createPrivySigner(privy, { walletId, authorizationPrivateKeys? })` for
   Privy users. `@privy-io/node` is an **optional peer dep** — non-Privy
   partners pay zero install cost.
-- **`@vayo/core-sdk/generated`** sub-export exposing the raw kubb
+- **`@vayolabs/core-sdk/generated`** sub-export exposing the raw kubb
   client functions for advanced users who want lower-level access.
 - **`VayoApiError`** with `statusCode`, `code`, `correlationId` for log
   grepping.

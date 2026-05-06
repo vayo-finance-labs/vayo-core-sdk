@@ -1,4 +1,4 @@
-# Contributing to `@vayo/core-sdk`
+# Contributing to `@vayolabs/core-sdk`
 
 Thanks for your interest in contributing! This document explains how the
 project is structured, how to propose changes, and the rules you should

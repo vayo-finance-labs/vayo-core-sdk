@@ -1,6 +1,6 @@
 ---
 name: vayo-core-sdk
-description: Use when the user is integrating with the Vayo Finance Partner API to deposit, redeem, or manage USDC lending positions on Solana via Kamino — partners sign redeems locally and Vayo attaches a witness cosignature binding the fee instructions. Triggers on requests like "integrate Vayo", "use the Vayo SDK", "redeem through Vayo", "supply to Kamino through Vayo", "partner fee split", "createVayoPartnerClient", or any reference to `@vayo/core-sdk`.
+description: Use when the user is integrating with the Vayo Finance Partner API to deposit, redeem, or manage USDC lending positions on Solana via Kamino — partners sign redeems locally and Vayo attaches a witness cosignature binding the fee instructions. Triggers on requests like "integrate Vayo", "use the Vayo SDK", "redeem through Vayo", "supply to Kamino through Vayo", "partner fee split", "createVayoPartnerClient", or any reference to `@vayolabs/core-sdk`.
 ---
 
 # Vayo Finance Partner SDK Integration
@@ -16,14 +16,14 @@ There are **two fee models** (mutually exclusive, picked once):
 - `performance_split` — Vayo splits its performance fee with the partner (default 50/50, server-capped via `VAYO_PERFORMANCE_FEE_SHARE_BPS`)
 - `builder_code` — Hyperliquid-style. Partner takes a small slice of *gross* yield, capped via `BUILDER_CODE_MAX_BPS` (default 10 bps)
 
-The official TypeScript SDK is **[`@vayo/core-sdk`](README.md)** (this directory). It wraps the partner routes in a typed client grouped by tag, ships an opinionated `redeem()` orchestrator, and provides an opt-in `@vayo/core-sdk/mode-s/privy` adapter for Privy users. Zero runtime dependencies.
+The official TypeScript SDK is **[`@vayolabs/core-sdk`](README.md)** (this directory). It wraps the partner routes in a typed client grouped by tag, ships an opinionated `redeem()` orchestrator, and provides an opt-in `@vayolabs/core-sdk/mode-s/privy` adapter for Privy users. Zero runtime dependencies.
 
 ## When to Use
 
 Use this skill when the user:
 
 - Asks how to deposit, redeem, or manage USDC positions through Vayo
-- Wants to integrate the `@vayo/core-sdk` package into their backend
+- Wants to integrate the `@vayolabs/core-sdk` package into their backend
 - Is debugging a build/sign/submit redeem flow
 - Mentions Privy + Vayo, on-chain fee splits, partner allowlists, idempotency keys, or `Idempotency-Key` headers
 - Wants to query the partner dashboard (users, transactions, fees, payouts)
@@ -64,16 +64,16 @@ For schema-level questions, hand the user the OpenAPI spec instead of guessing t
 ### 3. Install + bootstrap
 
 ```bash
-bun add @vayo/core-sdk
-# or: npm install @vayo/core-sdk
-# or: pnpm add @vayo/core-sdk
+bun add @vayolabs/core-sdk
+# or: npm install @vayolabs/core-sdk
+# or: pnpm add @vayolabs/core-sdk
 ```
 
 Partners typically also install their signer:
 
 ```bash
 # Privy signer
-bun add @vayo/core-sdk @privy-io/node
+bun add @vayolabs/core-sdk @privy-io/node
 ```
 
 `@privy-io/node` is an **optional peer dependency** — partners using other signers (Squads, custom HSMs) skip it entirely.
@@ -81,7 +81,7 @@ bun add @vayo/core-sdk @privy-io/node
 ### 4. Construct the client
 
 ```ts
-import { createVayoPartnerClient } from '@vayo/core-sdk'
+import { createVayoPartnerClient } from '@vayolabs/core-sdk'
 
 const vayo = createVayoPartnerClient({
   baseUrl: 'https://api.vayo.finance',
@@ -126,8 +126,8 @@ Use `U64_MAX` (exported from the SDK) for full redeems.
 **Always prefer `vayo.modeS.redeem()`** over hand-rolling `buildRedeem` + `submitSignedRedeem`. The orchestrator runs the full `/build → verify-fee-recipients → sign → /submit` flow with the Defense-3 mirror and an optional direct-RPC fallback. Hand-rolling skips safety checks.
 
 ```ts
-import { createVayoPartnerClient, U64_MAX, USDC_MINT } from '@vayo/core-sdk'
-import { createPrivySigner } from '@vayo/core-sdk/mode-s/privy'
+import { createVayoPartnerClient, U64_MAX, USDC_MINT } from '@vayolabs/core-sdk'
+import { createPrivySigner } from '@vayolabs/core-sdk/mode-s/privy'
 import { PrivyClient } from '@privy-io/node'
 
 const vayo = createVayoPartnerClient({
@@ -184,7 +184,7 @@ The `Idempotency-Key` cache TTL is 24h server-side.
 Always type-narrow with `instanceof VayoApiError` and surface `correlationId` in logs:
 
 ```ts
-import { VayoApiError } from '@vayo/core-sdk'
+import { VayoApiError } from '@vayolabs/core-sdk'
 
 try {
   await vayo.modeS.redeem({ /* ... */ })
@@ -246,7 +246,7 @@ Example:
 - **`?gasless=true` on redeem returns `501`** — the SDK exposes the parameter but the API hasn't shipped Kora cosigning for `/build` yet. Don't suggest it.
 - **Response types for `modeS.buildRedeem` / `modeS.submitSignedRedeem`** are typed by hand in the SDK (`BuildRedeemResponse`, `SubmitSignedRedeemResponse`) because Elysia's swagger only captures request schemas. Other route response types fall back to `unknown` until the API adds TypeBox response validators.
 - **Admin endpoints (`/admin/...`) are NOT exposed by the SDK** and are intentionally excluded from `openapi.json`. They're Vayo-internal — partners can never call them directly. If a user asks how to create their own partner record or rotate their own API key, the answer is "ask Vayo ops via partners@vayo.finance".
-- **`@privy-io/node` is an optional peer dep.** Don't add it to a non-Privy partner's `dependencies`. Only the `@vayo/core-sdk/mode-s/privy` sub-export needs it, and only if the partner uses Privy.
+- **`@privy-io/node` is an optional peer dep.** Don't add it to a non-Privy partner's `dependencies`. Only the `@vayolabs/core-sdk/mode-s/privy` sub-export needs it, and only if the partner uses Privy.
 - **Optional auto-rebalance proxy** — partners can onboard an HMAC-signed webhook contract so Vayo delegates rebalance signing back to them. See `docs-partners/guides/signing-modes.md` and `docs-partners/sdk/examples/rebalance-proxy.md`. Not configured by default.
 - **First-party Vayo internals** (Vayo's own backend/webapp, hexagonal use cases, CRONs) are out of scope for this skill. If the user is clearly working on Vayo internals rather than consuming the SDK as a partner, stop and defer to the host project's own conventions.
-- **Commit-time:** if you generate code that imports from `@vayo/core-sdk`, run `bun lint` and `bun typecheck` from the repo root before declaring done. The SDK is strict about `noUncheckedIndexedAccess` and biome formatting.
+- **Commit-time:** if you generate code that imports from `@vayolabs/core-sdk`, run `bun lint` and `bun typecheck` from the repo root before declaring done. The SDK is strict about `noUncheckedIndexedAccess` and biome formatting.

@@ -1,5 +1,5 @@
 {
-	"name": "@vayo/core-sdk",
+	"name": "@vayolabs/core-sdk",
 	"version": "0.1.1",
 	"description": "Official TypeScript SDK for the Vayo Finance Partner API — Mode S lending operations on Solana with partner-signed transactions.",
 	"type": "module",

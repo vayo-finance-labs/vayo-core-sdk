@@ -1,6 +1,6 @@
 # Security Policy
 
-`@vayo/core-sdk` is part of Vayo Finance's production integration surface
+`@vayolabs/core-sdk` is part of Vayo Finance's production integration surface
 for partners moving real USDC on Solana mainnet. We take security reports
 seriously — thank you for helping keep partners and their users safe.
 
@@ -8,7 +8,7 @@ seriously — thank you for helping keep partners and their users safe.
 
 **In scope for this repository:**
 
-- Bugs in the `@vayo/core-sdk` npm package that could cause partners to
+- Bugs in the `@vayolabs/core-sdk` npm package that could cause partners to
   sign incorrect transactions, expose API keys, leak user JWTs, bypass the
   Defense-3 fee recipient verification, or otherwise compromise funds or
   credentials.
@@ -123,7 +123,7 @@ major and the previous major for at least 12 months.
 ## Dependency security
 
 The SDK has **zero runtime dependencies** to minimize supply-chain risk.
-The optional Privy signer adapter (`@vayo/core-sdk/mode-s/privy`) loads
+The optional Privy signer adapter (`@vayolabs/core-sdk/mode-s/privy`) loads
 `@privy-io/node` only when imported — non-Privy partners are not exposed
 to that dependency at all.
 

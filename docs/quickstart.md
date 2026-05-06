@@ -20,12 +20,12 @@ errors, the `/build → sign → /submit` redeem orchestration with Defense-3
 fee verification):
 
 ```bash
-bun add @vayo/core-sdk
-# or: npm install @vayo/core-sdk
+bun add @vayolabs/core-sdk
+# or: npm install @vayolabs/core-sdk
 ```
 
 ```ts
-import { createVayoPartnerClient } from '@vayo/core-sdk'
+import { createVayoPartnerClient } from '@vayolabs/core-sdk'
 
 const vayo = createVayoPartnerClient({
   baseUrl: 'https://api.vayo.finance',
@@ -36,7 +36,7 @@ const overview = await vayo.dashboard.overview()
 ```
 
 The SDK has **zero runtime dependencies** and ships with an opt-in
-`@vayo/core-sdk/mode-s/privy` adapter for Privy users. Full method
+`@vayolabs/core-sdk/mode-s/privy` adapter for Privy users. Full method
 reference + redeem walkthrough: [`../README.md`](../README.md).
 
 The remainder of this guide shows the underlying HTTP / curl flows so
