@@ -4,6 +4,15 @@ All notable changes to `@vayolabs/core-sdk` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] — 2026-05-06
+
+Version-bump release with no source changes. Republished to align with the
+version pin recorded in `@vayolabs/core-mcp@0.1.0`'s manifest, which was
+generated from a stale `bun.lock` entry expecting `@vayolabs/core-sdk@0.1.1`.
+Without this release, `npx -y @vayolabs/core-mcp` failed with `No version
+matching "0.1.1" found for specifier "@vayolabs/core-sdk"`. Source code is
+identical to 0.1.0.
+
 ## [0.1.0] — 2026-04-10
 
 Initial public release.
